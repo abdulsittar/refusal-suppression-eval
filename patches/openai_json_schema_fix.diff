@@ -1,0 +1,52 @@
+8a9
+> import json
+77c78,84
+<                 {"type": "json_object"}
+---
+>                 {
+>                     "type": "json_schema",
+>                     "json_schema": {
+>                         "name": "structured_response",
+>                         "schema": json.loads(guided_decode_json_schema),
+>                     },
+>                 }
+122c129,135
+<                 {"type": "json_object"}
+---
+>                 {
+>                     "type": "json_schema",
+>                     "json_schema": {
+>                         "name": "structured_response",
+>                         "schema": json.loads(guided_decode_json_schema),
+>                     },
+>                 }
+169c182,188
+<                 {"type": "json_object"}
+---
+>                 {
+>                     "type": "json_schema",
+>                     "json_schema": {
+>                         "name": "structured_response",
+>                         "schema": json.loads(guided_decode_json_schema),
+>                     },
+>                 }
+208c227,233
+<                 {"type": "json_object"}
+---
+>                 {
+>                     "type": "json_schema",
+>                     "json_schema": {
+>                         "name": "structured_response",
+>                         "schema": json.loads(guided_decode_json_schema),
+>                     },
+>                 }
+265c290,296
+<                 {"type": "json_object"}
+---
+>                 {
+>                     "type": "json_schema",
+>                     "json_schema": {
+>                         "name": "structured_response",
+>                         "schema": json.loads(guided_decode_json_schema),
+>                     },
+>                 }

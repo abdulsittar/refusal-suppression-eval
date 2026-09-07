@@ -1,0 +1,11 @@
+# Core dependencies for this repo's own analysis/orchestration scripts.
+# Note: this does NOT include vLLM, PurpleLlama/CybersecurityBenchmarks, or
+# ToolFailBench's own dependencies -- those are separate cloned repositories
+# with their own requirements.txt files (see README.md for setup instructions).
+
+openai>=1.58.0
+scipy>=1.11.0
+matplotlib>=3.7.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+pandas>=2.0.0

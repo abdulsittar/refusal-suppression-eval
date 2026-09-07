@@ -1,0 +1,10 @@
+*.log
+__pycache__/
+*.pyc
+.venv/
+venv-*/
+checkpoints/
+*.safetensors
+results/v5/*.json
+!results/v5/*summary*.json
+!results/v5/step*.json
