@@ -9,6 +9,15 @@ from pathlib import Path
 
 RESULTS_DIR = Path.home() / "vantage" / "results"
 
+#CHECKPOINTS = {
+#    "google_gemma-3-12b-it": ("Gemma", "Original"),
+#    "huihui-ai_gemma-3-12b-it-abliterated": ("Gemma", "Huihui"),
+#    "p-e-w_gemma-3-12b-it-heretic-v2": ("Gemma", "Heretic"),
+#    "Qwen_Qwen3-4B-Instruct-2507": ("Qwen", "Original"),
+#    "huihui-ai_Huihui-Qwen3-4B-Instruct-2507-abliterated": ("Qwen", "Huihui"),
+#    "p-e-w_Qwen3-4B-Instruct-2507-heretic-v2": ("Qwen", "Heretic"),
+#}
+
 CHECKPOINTS = {
     "google_gemma-3-12b-it": ("Gemma", "Original"),
     "huihui-ai_gemma-3-12b-it-abliterated": ("Gemma", "Huihui"),
@@ -16,6 +25,9 @@ CHECKPOINTS = {
     "Qwen_Qwen3-4B-Instruct-2507": ("Qwen", "Original"),
     "huihui-ai_Huihui-Qwen3-4B-Instruct-2507-abliterated": ("Qwen", "Huihui"),
     "p-e-w_Qwen3-4B-Instruct-2507-heretic-v2": ("Qwen", "Heretic"),
+    "meta-llama_Meta-Llama-3.1-8B-Instruct": ("Llama", "Original"),
+    "huihui-ai_Meta-Llama-3.1-8B-Instruct-abliterated": ("Llama", "Huihui"),
+    "p-e-w_Llama-3.1-8B-Instruct-heretic": ("Llama", "Heretic"),
 }
 
 

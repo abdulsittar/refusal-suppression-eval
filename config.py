@@ -25,6 +25,9 @@ CHECKPOINTS = {
     "qwen-original": "Qwen_Qwen3-4B-Instruct-2507",
     "qwen-huihui": "huihui-ai_Huihui-Qwen3-4B-Instruct-2507-abliterated",
     "qwen-heretic": "p-e-w_Qwen3-4B-Instruct-2507-heretic-v2",
+    "llama-original": "meta-llama_Meta-Llama-3.1-8B-Instruct",
+    "llama-huihui": "huihui-ai_Meta-Llama-3.1-8B-Instruct-abliterated",
+    "llama-heretic": "p-e-w_Llama-3.1-8B-Instruct-heretic",
 }
 
 

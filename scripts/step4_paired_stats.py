@@ -34,7 +34,7 @@ def is_tool_required(item):
 
 def tsr_for_subset(baseline, treatment, task_ids, use_treatment=True):
     source = treatment if use_treatment else baseline
-    required = [tid for tid in task_ids if is_tool_required(baseline[tid])]
+    required = task_ids  # already filtered to tool-required upstream
     if not required:
         return 0.0
     skips = sum(1 for tid in required if source[tid].get("classification") == "tool_skip")
@@ -43,7 +43,7 @@ def tsr_for_subset(baseline, treatment, task_ids, use_treatment=True):
 
 def ctur_for_subset(baseline, treatment, task_ids, use_treatment=True):
     source = treatment if use_treatment else baseline
-    required = [tid for tid in task_ids if is_tool_required(baseline[tid])]
+    required = task_ids  # already filtered to tool-required upstream
     if not required:
         return 0.0
     clean = sum(1 for tid in required if source[tid].get("classification") == "correct")
@@ -91,12 +91,13 @@ def main():
     baseline = load_by_task_id(args.baseline)
     treatment = load_by_task_id(args.treatment)
     common_ids = sorted(set(baseline.keys()) & set(treatment.keys()))
+    tool_required_ids = [tid for tid in common_ids if is_tool_required(baseline[tid])]
 
     print(f"\n{'=' * 90}")
-    print(f"STEP 4: PAIRED STATISTICS -- Original vs {args.label}  (n={len(common_ids)} paired tasks)")
+    print(f"STEP 4: PAIRED STATISTICS -- Original vs {args.label}  (n={len(tool_required_ids)} tool-required tasks, out of {len(common_ids)} total)")
     print(f"{'=' * 90}")
 
-    tsr_point, tsr_lo, tsr_hi = bootstrap_paired_diff(baseline, treatment, common_ids, tsr_for_subset, n_boot=args.n_boot)
+    tsr_point, tsr_lo, tsr_hi = bootstrap_paired_diff(baseline, treatment, tool_required_ids, tsr_for_subset, n_boot=args.n_boot)
     print(f"\nTool-Skip Rate (TSR):")
     print(f"  Paired difference: {tsr_point:+.4f}  (95% bootstrap CI: [{tsr_lo:+.4f}, {tsr_hi:+.4f}])")
     if tsr_lo > 0 or tsr_hi < 0:
@@ -104,7 +105,7 @@ def main():
     else:
         print(f"  -> CI includes zero: not statistically significant at 95% level")
 
-    ctur_point, ctur_lo, ctur_hi = bootstrap_paired_diff(baseline, treatment, common_ids, ctur_for_subset, n_boot=args.n_boot)
+    ctur_point, ctur_lo, ctur_hi = bootstrap_paired_diff(baseline, treatment, tool_required_ids, ctur_for_subset, n_boot=args.n_boot)
     print(f"\nClean Tool-Use Rate (CTUR):")
     print(f"  Paired difference: {ctur_point:+.4f}  (95% bootstrap CI: [{ctur_lo:+.4f}, {ctur_hi:+.4f}])")
     if ctur_lo > 0 or ctur_hi < 0:
@@ -112,10 +113,10 @@ def main():
     else:
         print(f"  -> CI includes zero: not statistically significant at 95% level")
 
-    b = sum(1 for tid in common_ids
+    b = sum(1 for tid in tool_required_ids
             if baseline[tid].get("classification") == "correct"
             and treatment[tid].get("classification") == "tool_skip")
-    c = sum(1 for tid in common_ids
+    c = sum(1 for tid in tool_required_ids
             if baseline[tid].get("classification") == "tool_skip"
             and treatment[tid].get("classification") == "correct")
 

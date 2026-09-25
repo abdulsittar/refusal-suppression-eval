@@ -220,10 +220,13 @@ def run_tool_required_item(client, model, item, verbose=False):
             tool_choice="auto",
             temperature=0.0,
         )
+        msg = resp1.choices[0].message
+        if verbose:
+            print(f"    [debug] resp1.content: {msg.content!r}")
+            print(f"    [debug] resp1.tool_calls: {getattr(msg, 'tool_calls', None)}")
     except Exception as e:
         return {"structured_call": False, "round_trip": False, "error": str(e)}
 
-    msg = resp1.choices[0].message
     tool_calls = getattr(msg, "tool_calls", None)
 
     if not tool_calls:
@@ -258,12 +261,15 @@ def run_tool_required_item(client, model, item, verbose=False):
             model=model,
             messages=messages,
             tools=[tool],
+            tool_choice="none",   # forces text, not another tool call
             temperature=0.0,
         )
-        final_answer = resp2.choices[0].message.content or ""
+        msg2 = resp2.choices[0].message
+        if verbose:
+            print(f"    [debug] resp2.tool_calls: {getattr(msg2, 'tool_calls', None)}")
+        final_answer = msg2.content or ""
     except Exception as e:
         return {"structured_call": True, "round_trip": False, "error": str(e)}
-
     round_trip_ok = nonce in final_answer
 
     if verbose:

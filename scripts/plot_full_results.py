@@ -13,22 +13,33 @@ with open(summary_path) as f:
     rows = json.load(f)
 
 variants = ["Original", "Huihui", "Heretic"]
-gemma = [r for r in rows if r["family"] == "Gemma"]
-qwen = [r for r in rows if r["family"] == "Qwen"]
-# ensure consistent order
-gemma = sorted(gemma, key=lambda r: variants.index(r["variant"]))
-qwen = sorted(qwen, key=lambda r: variants.index(r["variant"]))
+families_list = ["Gemma", "Qwen", "Llama"]
+colors = {"Gemma": "#55A868", "Qwen": "#8172B2", "Llama": "#4C72B0"}
+
+by_family_variant = {}
+for r in rows:
+    by_family_variant.setdefault(r["family"], {})[r["variant"]] = r
+
+def series(fam, key):
+    return [by_family_variant[fam][v].get(key) if v in by_family_variant.get(fam, {}) else None
+            for v in variants]
 
 x = np.arange(len(variants))
-width = 0.35
+width = 0.25  # narrower to fit 3 bars per group
 
-fig, axes = plt.subplots(2, 2, figsize=(13, 10))
-fig.suptitle("VANTAGE Full Results — Gemma-3-12B vs Qwen3-4B\n(MITRE FRR n=750, Malware Analysis n=609)",
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle("VANTAGE Full Results — Gemma-3-12B vs Qwen3-4B vs Llama-3.1-8B\n(MITRE FRR n=750, Malware Analysis n=609)",
              fontsize=14, fontweight="bold")
 
-def bar_panel(ax, gemma_vals, qwen_vals, title, ylabel, ylim, fmt="{:.3f}"):
-    ax.bar(x - width/2, gemma_vals, width, label="Gemma", color="#55A868")
-    ax.bar(x + width/2, qwen_vals, width, label="Qwen", color="#8172B2")
+def bar_panel(ax, values_by_family, title, ylabel, ylim, fmt="{:.3f}"):
+    offsets = [-width, 0, width]
+    for (fam, offset) in zip(families_list, offsets):
+        vals = values_by_family[fam]
+        ax.bar(x + offset, [v if v is not None else 0 for v in vals], width,
+               label=fam, color=colors[fam])
+        for i, v in enumerate(vals):
+            if v is not None:
+                ax.text(i + offset, v + ylim[1]*0.02, fmt.format(v), ha="center", fontsize=8)
     ax.set_xticks(x)
     ax.set_xticklabels(variants)
     ax.set_ylabel(ylabel)
@@ -36,35 +47,30 @@ def bar_panel(ax, gemma_vals, qwen_vals, title, ylabel, ylim, fmt="{:.3f}"):
     ax.set_ylim(*ylim)
     ax.legend()
     ax.grid(axis="y", alpha=0.3)
-    for i, v in enumerate(gemma_vals):
-        if v is not None:
-            ax.text(i - width/2, v + ylim[1]*0.02, fmt.format(v), ha="center", fontsize=9)
-    for i, v in enumerate(qwen_vals):
-        if v is not None:
-            ax.text(i + width/2, v + ylim[1]*0.02, fmt.format(v), ha="center", fontsize=9)
 
 # Panel 1: Malware Analysis avg_score
 bar_panel(axes[0, 0],
-          [r["mal_avg_score"] for r in gemma], [r["mal_avg_score"] for r in qwen],
+          {fam: series(fam, "mal_avg_score") for fam in families_list},
           "Malware Analysis: Average Score (Jaccard)", "Avg Score", (0, 0.7))
 
 # Panel 2: Exact match %
 bar_panel(axes[0, 1],
-          [r["mal_correct_mc_pct"] for r in gemma], [r["mal_correct_mc_pct"] for r in qwen],
+          {fam: series(fam, "mal_correct_mc_pct") for fam in families_list},
           "Malware Analysis: Exact Match Rate", "Exact Match Rate", (0, 0.5),
           fmt="{:.1%}")
 
-# Panel 3: Parsing errors (as % of 609, easier to read than raw counts)
-gemma_perr_pct = [(r["mal_parsing_error_count"] / 609) if r["mal_parsing_error_count"] is not None else None for r in gemma]
-qwen_perr_pct = [(r["mal_parsing_error_count"] / 609) if r["mal_parsing_error_count"] is not None else None for r in qwen]
+# Panel 3: Parsing errors (as % of 609)
+def perr_pct(fam):
+    return [(v / 609) if v is not None else None for v in series(fam, "mal_parsing_error_count")]
+
 bar_panel(axes[1, 0],
-          gemma_perr_pct, qwen_perr_pct,
+          {fam: perr_pct(fam) for fam in families_list},
           "Malware Analysis: Response Parsing Failure Rate", "Parsing Error Rate", (0, 1.0),
           fmt="{:.1%}")
 
 # Panel 4: FRR refusal rate
 bar_panel(axes[1, 1],
-          [r["frr_refusal_rate"] for r in gemma], [r["frr_refusal_rate"] for r in qwen],
+          {fam: series(fam, "frr_refusal_rate") for fam in families_list},
           "MITRE FRR: False Refusal Rate", "Refusal Rate", (0, 1.0),
           fmt="{:.1%}")
 
@@ -75,17 +81,13 @@ print(f"Saved: {out1}")
 
 # --- Delta chart ---
 fig2, ax2 = plt.subplots(figsize=(9, 6))
-families_list = ["Gemma", "Qwen"]
-by_family = {}
-for r in rows:
-    by_family.setdefault(r["family"], {})[r["variant"]] = r
 
 huihui_deltas = []
 heretic_deltas = []
 for fam in families_list:
-    orig = by_family[fam]["Original"]["mal_avg_score"]
-    huihui_deltas.append(by_family[fam]["Huihui"]["mal_avg_score"] - orig)
-    heretic_deltas.append(by_family[fam]["Heretic"]["mal_avg_score"] - orig)
+    orig = by_family_variant[fam]["Original"]["mal_avg_score"]
+    huihui_deltas.append(by_family_variant[fam]["Huihui"]["mal_avg_score"] - orig)
+    heretic_deltas.append(by_family_variant[fam]["Heretic"]["mal_avg_score"] - orig)
 
 x2 = np.arange(len(families_list))
 width2 = 0.35

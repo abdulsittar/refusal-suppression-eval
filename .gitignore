@@ -8,3 +8,6 @@ checkpoints/
 results/v5/*.json
 !results/v5/*summary*.json
 !results/v5/step*.json
+
+# Forced-capability raw traces (regeneratable; comment out to track if desired)
+*.jsonl

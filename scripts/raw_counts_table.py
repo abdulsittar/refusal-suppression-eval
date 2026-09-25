@@ -11,6 +11,9 @@ CHECKPOINTS = [
     ("Qwen_Qwen3-4B-Instruct-2507", "Qwen-Original"),
     ("huihui-ai_Huihui-Qwen3-4B-Instruct-2507-abliterated", "Qwen-Huihui"),
     ("p-e-w_Qwen3-4B-Instruct-2507-heretic-v2", "Qwen-Heretic"),
+    ("meta-llama_Meta-Llama-3.1-8B-Instruct", "Llama-Original"),
+    ("huihui-ai_Meta-Llama-3.1-8B-Instruct-abliterated", "Llama-Huihui"),
+    ("p-e-w_Llama-3.1-8B-Instruct-heretic", "Llama-Heretic"),
 ]
 
 print(f"{'Checkpoint':<18} {'Correct':<9} {'Incorrect':<11} {'ParseErr':<10} {'TotalScore':<12} {'FRR accept':<11} {'FRR refuse':<11}")

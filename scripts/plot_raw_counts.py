@@ -15,6 +15,9 @@ CHECKPOINTS = [
     ("Qwen_Qwen3-4B-Instruct-2507", "Qwen", "Original"),
     ("huihui-ai_Huihui-Qwen3-4B-Instruct-2507-abliterated", "Qwen", "Huihui"),
     ("p-e-w_Qwen3-4B-Instruct-2507-heretic-v2", "Qwen", "Heretic"),
+    ("meta-llama_Meta-Llama-3.1-8B-Instruct", "Llama", "Original"),
+    ("huihui-ai_Meta-Llama-3.1-8B-Instruct-abliterated", "Llama", "Huihui"),
+    ("p-e-w_Llama-3.1-8B-Instruct-heretic", "Llama", "Heretic"),
 ]
 
 rows = []
@@ -39,19 +42,26 @@ for ckpt_dir, family, variant in CHECKPOINTS:
     })
 
 variants = ["Original", "Huihui", "Heretic"]
-gemma = sorted([r for r in rows if r["family"] == "Gemma"], key=lambda r: variants.index(r["variant"]))
-qwen = sorted([r for r in rows if r["family"] == "Qwen"], key=lambda r: variants.index(r["variant"]))
+families_list = ["Gemma", "Qwen", "Llama"]
+colors = {"Gemma": "#55A868", "Qwen": "#8172B2", "Llama": "#4C72B0"}
+
+by_family = {fam: sorted([r for r in rows if r["family"] == fam], key=lambda r: variants.index(r["variant"]))
+             for fam in families_list}
 
 x = np.arange(len(variants))
-width = 0.35
+width = 0.25
 
-fig, axes = plt.subplots(2, 2, figsize=(13, 10))
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 fig.suptitle("VANTAGE Full Results — Raw Counts (not percentages)\nMITRE FRR n=750, Malware Analysis n=609",
              fontsize=14, fontweight="bold")
 
-def bar_panel(ax, gemma_vals, qwen_vals, title, ylabel, ylim):
-    ax.bar(x - width/2, gemma_vals, width, label="Gemma", color="#55A868")
-    ax.bar(x + width/2, qwen_vals, width, label="Qwen", color="#8172B2")
+def bar_panel(ax, key, title, ylabel, ylim):
+    offsets = [-width, 0, width]
+    for fam, offset in zip(families_list, offsets):
+        vals = [r[key] for r in by_family[fam]]
+        ax.bar(x + offset, vals, width, label=fam, color=colors[fam])
+        for i, v in enumerate(vals):
+            ax.text(i + offset, v + ylim[1]*0.02, f"{v}", ha="center", fontsize=8, fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(variants)
     ax.set_ylabel(ylabel)
@@ -59,29 +69,21 @@ def bar_panel(ax, gemma_vals, qwen_vals, title, ylabel, ylim):
     ax.set_ylim(*ylim)
     ax.legend()
     ax.grid(axis="y", alpha=0.3)
-    for i, v in enumerate(gemma_vals):
-        ax.text(i - width/2, v + ylim[1]*0.02, f"{v}", ha="center", fontsize=9, fontweight="bold")
-    for i, v in enumerate(qwen_vals):
-        ax.text(i + width/2, v + ylim[1]*0.02, f"{v}", ha="center", fontsize=9, fontweight="bold")
 
 # Panel 1: Correct count (out of 609)
-bar_panel(axes[0, 0],
-          [r["correct"] for r in gemma], [r["correct"] for r in qwen],
+bar_panel(axes[0, 0], "correct",
           "Malware Analysis: Exact-Correct Count (out of 609)", "Correct answers", (0, 150))
 
 # Panel 2: Incorrect count (out of 609)
-bar_panel(axes[0, 1],
-          [r["incorrect"] for r in gemma], [r["incorrect"] for r in qwen],
+bar_panel(axes[0, 1], "incorrect",
           "Malware Analysis: Incorrect Count (out of 609)", "Incorrect answers", (0, 609))
 
 # Panel 3: Parsing error count (out of 609)
-bar_panel(axes[1, 0],
-          [r["parse_err"] for r in gemma], [r["parse_err"] for r in qwen],
+bar_panel(axes[1, 0], "parse_err",
           "Malware Analysis: Parsing Error Count (out of 609)", "Parsing errors", (0, 50))
 
 # Panel 4: FRR refusal count (out of 750)
-bar_panel(axes[1, 1],
-          [r["refuse"] for r in gemma], [r["refuse"] for r in qwen],
+bar_panel(axes[1, 1], "refuse",
           "MITRE FRR: Refusal Count (out of 750)", "Refusals", (0, 50))
 
 plt.tight_layout()
