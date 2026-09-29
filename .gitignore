@@ -11,3 +11,7 @@ results/v5/*.json
 
 # Forced-capability raw traces (regeneratable; comment out to track if desired)
 *.jsonl
+
+# refusal-eval raw completions (harmful-prompt outputs from abliterated models)
+results/refusal_*/
+*.jsonl
