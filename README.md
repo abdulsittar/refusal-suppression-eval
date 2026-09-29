@@ -5,19 +5,21 @@ open-weight LLMs degrade defensive cybersecurity capability, across three axes:
 
 1. **MITRE FRR** — False Refusal Rate on benign cybersecurity prompts
 2. **Malware Analysis** (CyberSOCEval) — multiple-choice malware-analysis accuracy
-3. **ToolFailBench** — agentic tool-use reliability (Qwen family only; see Limitations)
+3. **ToolFailBench** — agentic tool-use reliability (Qwen and Llama
+   families; Gemma excluded — failed preliminary tool-interface checks; see
+   `manifest/MANIFEST.md`)
 
-Six checkpoints tested: Gemma-3-12B-it and Qwen3-4B-Instruct-2507, each in three
-variants — Original, Huihui (abliterated), and Heretic.
+Nine checkpoints tested: Gemma-3-12B-it, Qwen3-4B-Instruct-2507, and
+Llama-3.1-8B-Instruct, each in three variants — Original, Huihui (abliterated),
+and Heretic.
 
 ## Key finding
 
-Two different refusal-suppression techniques applied to the same base model
-produce very different downstream effects. **Huihui** causes a large,
-statistically significant degradation in both Malware Analysis accuracy and
-agentic tool-use reliability (Tool-Skip Rate +20pp on Qwen, p<0.000001).
-**Heretic** does not — its effects are statistically indistinguishable from
-no change (p=0.727). See `manifest/MANIFEST.md` for the full experimental log.
+Refusal-suppressed checkpoints (Huihui and Heretic derivatives of Qwen,
+Llama, and Gemma) reduce detected refusal on harmful and benign prompts, but
+do not consistently preserve malware-analysis capability or agentic tool-use
+reliability — and which axis degrades, and how much, differs by model
+family. See `manifest/MANIFEST.md` for the working experimental log.
 
 ## Setup
 
@@ -42,7 +44,7 @@ patch to PurpleLlama's `openai.py` client (guided-decoding fix).
 
 ## Checkpoints
 
-Download the six model checkpoints (not included in this repo — see
+Download the nine model checkpoints (not included in this repo — see
 `config.py` for expected directory names) into `$VANTAGE_ROOT/checkpoints/`:
 
 | Key | Hugging Face repo |
@@ -53,6 +55,13 @@ Download the six model checkpoints (not included in this repo — see
 | qwen-original | Qwen/Qwen3-4B-Instruct-2507 |
 | qwen-huihui | huihui-ai/Huihui-Qwen3-4B-Instruct-2507-abliterated |
 | qwen-heretic | p-e-w/Qwen3-4B-Instruct-2507-heretic-v2 |
+| llama-original | meta-llama/Meta-Llama-3.1-8B-Instruct |
+| llama-huihui | huihui-ai/Meta-Llama-3.1-8B-Instruct-abliterated |
+| llama-heretic | p-e-w/Llama-3.1-8B-Instruct-heretic (via askalgore mirror — see note) |
+
+*Llama-Heretic was obtained through the askalgore mirror after the original
+p-e-w repository became unavailable. Identity with the earlier p-e-w upload
+has not been verified.*
 
 ## Usage
 
