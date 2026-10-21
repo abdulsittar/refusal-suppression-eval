@@ -6,7 +6,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 CHECKPOINTS = [
     ("google_gemma-3-12b-it", "Gemma", "Original"),
@@ -87,6 +87,6 @@ bar_panel(axes[1, 1], "refuse",
           "MITRE FRR: Refusal Count (out of 750)", "Refusals", (0, 50))
 
 plt.tight_layout()
-out_path = RESULTS_DIR / "vantage_raw_counts.png"
+out_path = RESULTS_DIR / "raw_counts.png"
 plt.savefig(out_path, dpi=150, bbox_inches="tight")
 print(f"Saved: {out_path}")
