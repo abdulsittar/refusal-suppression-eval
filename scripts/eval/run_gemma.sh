@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ~/vantage/ToolFailBench
+cd ~/ToolFailBench
 for spec in "gemma-original:google_gemma-3-12b-it" \
             "gemma-huihui:huihui-ai_gemma-3-12b-it-abliterated" \
             "gemma-heretic:p-e-w_gemma-3-12b-it-heretic-v2"; do
