@@ -4,14 +4,14 @@ Reads paths from environment variables (with sensible defaults) so the
 repo works on any machine without hardcoded paths.
 
 Set these in your shell or in a .env file (see .env.example):
-  ROOT              - root directory for checkpoints/results (default: ~/vantage)
+  ROOT              - root directory for checkpoints/results (default: ~/)
   VLLM_BASE_URL             - base URL of the running vLLM server (default: http://localhost:8000/v1)
 """
 
 import os
 from pathlib import Path
 
-ROOT = Path(os.environ.get("VANTAGE_ROOT", Path.home() / "vantage"))
+ROOT = Path(os.environ.get("ROOT", Path.home() / ""))
 CHECKPOINTS_DIR = ROOT / "checkpoints"
 RESULTS_DIR = ROOT / "results"
 VLLM_BASE_URL = os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
