@@ -28,8 +28,7 @@ x = np.arange(len(variants))
 width = 0.25  # narrower to fit 3 bars per group
 
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-fig.suptitle("VANTAGE Full Results — Gemma-3-12B vs Qwen3-4B vs Llama-3.1-8B\n(MITRE FRR n=750, Malware Analysis n=609)",
-             fontsize=14, fontweight="bold")
+fig.suptitle("Full Results — Gemma-3-12B vs Qwen3-4B vs Llama-3.1-8B\n(MITRE FRR n=750, Malware Analysis n=609)", fontsize=14, fontweight="bold")
 
 def bar_panel(ax, values_by_family, title, ylabel, ylim, fmt="{:.3f}"):
     offsets = [-width, 0, width]
