@@ -21,7 +21,7 @@ x = np.arange(len(variants))
 width = 0.35
 
 fig, axes = plt.subplots(2, 2, figsize=(13, 10))
-fig.suptitle("VANTAGE Pilot Results — Post Guided-Decoding Fix (n=10)", fontsize=14, fontweight="bold")
+fig.suptitle("Pilot Results — Post Guided-Decoding Fix (n=10)", fontsize=14, fontweight="bold")
 
 def bar_panel(ax, gemma_vals, qwen_vals, title, ylabel, ylim, fmt="{:.3f}"):
     ax.bar(x - width/2, gemma_vals, width, label="Gemma", color="#55A868")
