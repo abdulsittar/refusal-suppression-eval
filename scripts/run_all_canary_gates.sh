@@ -1,16 +1,16 @@
 #!/bin/bash
 # run_all_canary_gates.sh
 #
-# Runs the ToolFailBench canary gate across all 6 VANTAGE checkpoints,
+# Runs the ToolFailBench canary gate across all 6 checkpoints,
 # one at a time: starts vLLM with tool-calling enabled, waits for readiness,
 # runs the gate, saves output, tears down, moves to next.
 
 set -uo pipefail
 
-VANTAGE_ENV="$HOME/vantage-env"
-EVAL_ENV="$HOME/vantage-eval-env"
-CHECKPOINTS_DIR="${VANTAGE_ROOT:-$HOME/vantage}/checkpoints"
-RESULTS_DIR="$HOME/vantage/results/canary_gates"
+VAN_ENV="$HOME/van-env"
+EVAL_ENV="$HOME/van-eval-env"
+CHECKPOINTS_DIR="${ROOT:-$HOME/}/checkpoints"
+RESULTS_DIR="$HOME/results/canary_gates"
 mkdir -p "$RESULTS_DIR"
 
 declare -A CHECKPOINTS=(
@@ -76,7 +76,7 @@ for ckpt_name in "${ORDER[@]}"; do
   kill_vllm
 
   echo "Launching vLLM for $ckpt_name (tool_parser=$tool_parser)..."
-  source "$VANTAGE_ENV/bin/activate"
+  source "$VAN_ENV/bin/activate"
   nohup python -m vllm.entrypoints.openai.api_server \
     --model "$ckpt_path" \
     --dtype bfloat16 \
@@ -99,7 +99,7 @@ for ckpt_name in "${ORDER[@]}"; do
   echo "Running canary gate for $ckpt_name..."
   source "$EVAL_ENV/bin/activate"
   GATE_OUTPUT="$RESULTS_DIR/${ckpt_name}_gate_output.txt"
-  python3 "$HOME/vantage/canary_gate.py" "$ckpt_path" -v > "$GATE_OUTPUT" 2>&1
+  python3 "$HOME/canary_gate.py" "$ckpt_path" -v > "$GATE_OUTPUT" 2>&1
   deactivate
 
   OVERALL_LINE=$(grep "OVERALL:" "$GATE_OUTPUT" || echo "OVERALL: UNKNOWN (check $GATE_OUTPUT)")
