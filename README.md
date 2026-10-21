@@ -1,4 +1,4 @@
-# VANTAGE: Refusal-Suppression Evaluation Study
+# Refusal-Suppression Evaluation Study
 
 Evaluates whether refusal-suppression ("uncensoring") techniques applied to
 open-weight LLMs degrade defensive cybersecurity capability, across three axes:
@@ -30,7 +30,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-# edit .env: set VANTAGE_ROOT to your checkpoints/results directory
+# edit .env: set ROOT to your checkpoints/results directory
 ```
 
 You will also need, cloned separately (not included in this repo):
@@ -45,7 +45,7 @@ patch to PurpleLlama's `openai.py` client (guided-decoding fix).
 ## Checkpoints
 
 Download the nine model checkpoints (not included in this repo — see
-`config.py` for expected directory names) into `$VANTAGE_ROOT/checkpoints/`:
+`config.py` for expected directory names) into `$ROOT/checkpoints/`:
 
 | Key | Hugging Face repo |
 |---|---|
