@@ -5,7 +5,7 @@ import sys
 import re
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 # Keywords that make a prompt more likely to be safety-sensitive.
 RISK_KEYWORDS = [
