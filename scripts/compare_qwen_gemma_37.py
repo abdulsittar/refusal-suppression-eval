@@ -8,15 +8,15 @@ import re
 # ---------------------------------------------------------
 
 qwen_file = os.path.expanduser(
-    "~/vantage/results/Qwen_Qwen3-4B-Instruct-2507_mitre_frr_refusals.csv"
+    "~/results/Qwen_Qwen3-4B-Instruct-2507_mitre_frr_refusals.csv"
 )
 
 gemma_file = os.path.expanduser(
-    "~/vantage/results/google_gemma-3-12b-it/mitre_frr_full_responses.json"
+    "~/results/google_gemma-3-12b-it/mitre_frr_full_responses.json"
 )
 
 output_file = os.path.expanduser(
-    "~/vantage/results/qwen_refused_vs_gemma_37.csv"
+    "~/results/qwen_refused_vs_gemma_37.csv"
 )
 
 # ---------------------------------------------------------
