@@ -6,7 +6,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 summary_path = RESULTS_DIR / "full_summary.json"
 
 with open(summary_path) as f:
@@ -75,7 +75,7 @@ bar_panel(axes[1, 1],
           fmt="{:.1%}")
 
 plt.tight_layout()
-out1 = RESULTS_DIR / "vantage_full_comparison.png"
+out1 = RESULTS_DIR / "full_comparison.png"
 plt.savefig(out1, dpi=150, bbox_inches="tight")
 print(f"Saved: {out1}")
 
@@ -106,6 +106,6 @@ for i, v in enumerate(heretic_deltas):
     ax2.text(i + width2/2, v - 0.015 if v < 0 else v + 0.005, f"{v:+.4f}", ha="center", fontsize=10)
 
 plt.tight_layout()
-out2 = RESULTS_DIR / "vantage_full_delta.png"
+out2 = RESULTS_DIR / "full_delta.png"
 plt.savefig(out2, dpi=150, bbox_inches="tight")
 print(f"Saved: {out2}")
