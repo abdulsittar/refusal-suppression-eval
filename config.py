@@ -1,19 +1,19 @@
 """
-Central configuration for the VANTAGE refusal-suppression study scripts.
+Central configuration for the refusal-suppression study scripts.
 Reads paths from environment variables (with sensible defaults) so the
 repo works on any machine without hardcoded paths.
 
 Set these in your shell or in a .env file (see .env.example):
-  VANTAGE_ROOT              - root directory for checkpoints/results (default: ~/vantage)
+  ROOT              - root directory for checkpoints/results (default: ~/vantage)
   VLLM_BASE_URL             - base URL of the running vLLM server (default: http://localhost:8000/v1)
 """
 
 import os
 from pathlib import Path
 
-VANTAGE_ROOT = Path(os.environ.get("VANTAGE_ROOT", Path.home() / "vantage"))
-CHECKPOINTS_DIR = VANTAGE_ROOT / "checkpoints"
-RESULTS_DIR = VANTAGE_ROOT / "results"
+ROOT = Path(os.environ.get("VANTAGE_ROOT", Path.home() / "vantage"))
+CHECKPOINTS_DIR = ROOT / "checkpoints"
+RESULTS_DIR = ROOT / "results"
 VLLM_BASE_URL = os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
 
 # The six checkpoints used in this study.
