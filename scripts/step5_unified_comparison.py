@@ -7,10 +7,10 @@ import json
 from pathlib import Path
 
 HOME = Path.home()
-FRR_MALWARE_PATH = HOME / "vantage" / "results" / "full_summary.json"
-TOOLFAILBENCH_PATH = HOME / "vantage" / "ToolFailBench" / "results" / "v5" / "step2_official_metrics.json"
-OUT_PATH = HOME / "vantage" / "results" / "step5_unified_comparison.json"
-OUT_MD_PATH = HOME / "vantage" / "results" / "step5_unified_comparison.md"
+FRR_MALWARE_PATH = HOME / "results" / "full_summary.json"
+TOOLFAILBENCH_PATH = HOME / "ToolFailBench" / "results" / "v5" / "step2_official_metrics.json"
+OUT_PATH = HOME / "results" / "step5_unified_comparison.json"
+OUT_MD_PATH = HOME / "results" / "step5_unified_comparison.md"
 
 CHECKPOINT_LABELS = {
     "google_gemma-3-12b-it": ("Gemma", "Original"),
