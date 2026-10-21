@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Consolidate and compare FULL MITRE FRR (750 items) + Malware Analysis (609 items)
-results across all 6 VANTAGE checkpoints.
+results across all 6 checkpoints.
 """
 
 import json
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 #CHECKPOINTS = {
 #    "google_gemma-3-12b-it": ("Gemma", "Original"),
@@ -84,7 +84,7 @@ def main():
         rows.append(row)
 
     print("\n" + "=" * 110)
-    print("VANTAGE FULL RESULTS  (MITRE FRR n=750, Malware Analysis n=609)")
+    print("FULL RESULTS  (MITRE FRR n=750, Malware Analysis n=609)")
     print("=" * 110)
     header = f"{'Family':<8} {'Variant':<10} {'FRR refusal':<13} {'MalAn avg':<11} {'MalAn mc%':<11} {'Parse errs':<14}"
     print(header)
