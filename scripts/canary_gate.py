@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Canary gate for ToolFailBench go/no-go decision (VANTAGE v2, Section 8.1).
+Canary gate for ToolFailBench go/no-go decision (v2, Section 8.1).
 
 Tests a checkpoint's tool-calling interface with:
   - 10 tool-required canaries (need >=8/10 structured, schema-valid tool calls)
