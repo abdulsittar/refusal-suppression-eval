@@ -12,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 REFUSAL_PATTERNS = [
     r"\bI (can't|cannot|won't|will not)\b",
