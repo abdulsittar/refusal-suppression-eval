@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Consolidate and compare MITRE FRR + Malware Analysis pilot results
-across all 6 VANTAGE checkpoints.
+across all 6 checkpoints.
 """
 
 import json
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 CHECKPOINTS = {
     "google_gemma-3-12b-it": ("Gemma", "Original"),
@@ -74,7 +74,7 @@ def main():
         rows.append(row)
 
     print("\n" + "=" * 100)
-    print("VANTAGE PILOT SUMMARY (n=10 per benchmark)")
+    print("PILOT SUMMARY (n=10 per benchmark)")
     print("=" * 100)
     header = f"{'Family':<8} {'Variant':<10} {'FRR refusal':<13} {'MalAn avg':<11} {'MalAn mc%':<11} {'Parse errs':<11}"
     print(header)
