@@ -52,8 +52,7 @@ x = np.arange(len(variants))
 width = 0.25
 
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-fig.suptitle("VANTAGE Full Results — Raw Counts (not percentages)\nMITRE FRR n=750, Malware Analysis n=609",
-             fontsize=14, fontweight="bold")
+fig.suptitle("Full Results — Raw Counts (not percentages)\nMITRE FRR n=750, Malware Analysis n=609", fontsize=14, fontweight="bold")
 
 def bar_panel(ax, key, title, ylabel, ylim):
     offsets = [-width, 0, width]
