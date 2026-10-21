@@ -12,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 # Common refusal phrases used by CyberSecEval's keyword-based judge
 # (adjust this list based on what the actual judge script uses - see grep output)
