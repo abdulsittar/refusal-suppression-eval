@@ -12,7 +12,7 @@ import sys
 import random
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 
 def main():
