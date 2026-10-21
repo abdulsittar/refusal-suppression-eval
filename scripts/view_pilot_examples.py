@@ -13,7 +13,7 @@ import argparse
 import json
 from pathlib import Path
 
-RESULTS_DIR = Path.home() / "vantage" / "results"
+RESULTS_DIR = Path.home() / "results"
 
 CHECKPOINTS = [
     ("google_gemma-3-12b-it", "Gemma-Original"),
