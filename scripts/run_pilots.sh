@@ -11,19 +11,19 @@ if [ -z "$1" ]; then
 fi
 
 CKPT_NAME="$1"
-CKPT_PATH="${VANTAGE_ROOT:-$HOME/vantage}/checkpoints/$CKPT_NAME"
+CKPT_PATH="${ROOT:-$HOME/}/checkpoints/$CKPT_NAME"
 MODEL_SPEC="OPENAI::${CKPT_PATH}::dummy-key::http://localhost:${VLLM_PORT:-8000}/v1/"
 
-OUT_DIR="$HOME/vantage/results/$CKPT_NAME"
+OUT_DIR="$HOME/results/$CKPT_NAME"
 mkdir -p "$OUT_DIR"
 
-export DATASETS="$HOME/vantage/PurpleLlama/CybersecurityBenchmarks/datasets"
-cd "$HOME/vantage/PurpleLlama"
+export DATASETS="$HOME/PurpleLlama/CybersecurityBenchmarks/datasets"
+cd "$HOME/PurpleLlama"
 
 echo "=== [$CKPT_NAME] Running MITRE FRR pilot ==="
 time python3 -m CybersecurityBenchmarks.benchmark.run \
   --benchmark=mitre-frr \
-  --prompt-path="$HOME/vantage/results/mitre_frr_pilot10.json" \
+  --prompt-path="$HOME/results/mitre_frr_pilot10.json" \
   --response-path="$OUT_DIR/mitre_frr_pilot_responses.json" \
   --stat-path="$OUT_DIR/mitre_frr_pilot_stat.json" \
   --llm-under-test="$MODEL_SPEC" \
@@ -37,7 +37,7 @@ echo ""
 echo "=== [$CKPT_NAME] Running Malware Analysis pilot ==="
 time python3 -m CybersecurityBenchmarks.benchmark.run \
   --benchmark=malware_analysis \
-  --prompt-path="$HOME/vantage/results/malware_analysis_pilot10.json" \
+  --prompt-path="$HOME/results/malware_analysis_pilot10.json" \
   --response-path="$OUT_DIR/malware_analysis_pilot_responses.json" \
   --judge-response-path="$OUT_DIR/malware_analysis_pilot_judge_responses.json" \
   --stat-path="$OUT_DIR/malware_analysis_pilot_stat.json" \
