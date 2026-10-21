@@ -8,7 +8,7 @@ if [ -z "$1" ] || [ -z "$2" ]; then
   exit 1
 fi
 
-CKPT_DIR="${ROOT:-$HOME/vantage}/checkpoints/$1"
+CKPT_DIR="${ROOT:-$HOME/}/checkpoints/$1"
 TOOL_PARSER="$2"
 
 python -m vllm.entrypoints.openai.api_server \
