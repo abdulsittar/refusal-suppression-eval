@@ -1,9 +1,9 @@
 #!/bin/bash
-cd ~/vantage/ToolFailBench
+cd ~/ToolFailBench
 for fam in llama gemma qwen; do
   for v in original huihui heretic; do
     name=$fam-$v
-    f=models/configs/vantage/$name.yaml
+    f=models/configs/$name.yaml
     path=$(awk '/^hf_model_id:/{print $2}' "$f")
     if [ -z "$path" ]; then echo "SKIP $name (no path)"; continue; fi
     echo "=== $name ($path)"
