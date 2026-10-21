@@ -62,8 +62,8 @@ bar_panel(axes[1, 1],
           fmt="{:.0%}")
 
 plt.tight_layout()
-plt.savefig("vantage_pilot_comparison_v2.png", dpi=150, bbox_inches="tight")
-print("Saved: vantage_pilot_comparison_v2.png")
+plt.savefig("pilot_comparison_v2.png", dpi=150, bbox_inches="tight")
+print("Saved: pilot_comparison_v2.png")
 
 # --- Second chart: within-family deltas (the key H2 finding) ---
 fig2, ax2 = plt.subplots(figsize=(9, 6))
@@ -89,7 +89,7 @@ for i, v in enumerate(heretic_deltas):
     ax2.text(i + width2/2, v - 0.015 if v < 0 else v + 0.005, f"{v:+.3f}", ha="center", fontsize=10)
 
 plt.tight_layout()
-plt.savefig("vantage_delta_comparison.png", dpi=150, bbox_inches="tight")
-print("Saved: vantage_delta_comparison.png")
+plt.savefig("delta_comparison.png", dpi=150, bbox_inches="tight")
+print("Saved: delta_comparison.png")
 
 plt.show()  # comment this out if using the Agg backend / running headless
