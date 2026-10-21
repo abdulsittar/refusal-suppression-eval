@@ -11,19 +11,19 @@ from collections import Counter
 # ============================================================
 
 INPUT_FILE = os.path.expanduser(
-    "~/vantage/results/google_gemma-3-12b-it/mitre_frr_full_responses.json"
+    "~/results/google_gemma-3-12b-it/mitre_frr_full_responses.json"
 )
 
 OUTPUT_CSV = os.path.expanduser(
-    "~/vantage/results/google_gemma-3-12b-it_gemma_refusal_candidates.csv"
+    "~/results/google_gemma-3-12b-it_gemma_refusal_candidates.csv"
 )
 
 OUTPUT_TXT = os.path.expanduser(
-    "~/vantage/results/google_gemma-3-12b-it_gemma_refusal_candidates.txt"
+    "~/results/google_gemma-3-12b-it_gemma_refusal_candidates.txt"
 )
 
 OUTPUT_SUMMARY = os.path.expanduser(
-    "~/vantage/results/google_gemma-3-12b-it_gemma_refusal_candidates_summary.txt"
+    "~/results/google_gemma-3-12b-it_gemma_refusal_candidates_summary.txt"
 )
 
 # ============================================================
