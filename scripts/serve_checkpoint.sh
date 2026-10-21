@@ -7,11 +7,11 @@ set -e
 if [ -z "$1" ]; then
   echo "Usage: $0 <checkpoint_dir_name>"
   echo "Available checkpoints:"
-  ls ${VANTAGE_ROOT:-$HOME/vantage}/checkpoints/
+  ls ${ROOT:-$HOME/}/checkpoints/
   exit 1
 fi
 
-CKPT_DIR="${VANTAGE_ROOT:-$HOME/vantage}/checkpoints/$1"
+CKPT_DIR="${ROOT:-$HOME/}/checkpoints/$1"
 
 if [ ! -d "$CKPT_DIR" ]; then
   echo "ERROR: $CKPT_DIR does not exist"
